@@ -32,7 +32,7 @@ int main() {
     noecho();
     curs_set(0);
 
-    int matriz[3][3] = {{8, 4, 3}, {1, 6, 2}, {7, 5, 0}};
+    int matriz[3][3] = {{4, 2, 6}, {1, 3, 7}, {8, 5, 0}};
     int vacioY = 2, vacioX = 2;
 
     while(true) {
