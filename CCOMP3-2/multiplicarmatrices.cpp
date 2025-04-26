@@ -14,9 +14,6 @@ void imprimirMatriz(int (*m)[3]) {
 }
 
 void multi(int (*p)[3][3]) {
-    // p[0]: primera matriz
-    // p[1]: segunda matriz
-    // p[2]: matriz resultado
 
     for (int (*fila)[3] = p[2]; fila < p[2] + 3; fila++) {
         for (int *col = *fila; col < (fila == p[2] + 2 ? *fila + 3 : *(fila + 1)); col++) {
