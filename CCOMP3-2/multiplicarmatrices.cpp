@@ -15,14 +15,17 @@ void imprimirMatriz(int (*m)[3]) {
 
 void multi(int (*p)[3][3]) {
 
-    for (int (*fila)[3] = p[2]; fila < p[2] + 3; fila++) {
-        for (int *col = *fila; col < (fila == p[2] + 2 ? *fila + 3 : *(fila + 1)); col++) {
+    for (int (*fila)[3] = p[2]; fila < p[2] + 3; fila++) { // fila de la matriz resultado
+        for (int *col = *fila; col < (fila == p[2] + 2 ? *fila + 3 : *(fila + 1)); col++) { 
             int i = fila - p[2];
-            int j = col - *fila;
-            *col = 0;
+            int j = col - *fila; 
+            *col = 0; 
 
-            for (int k = 0; k < 3; k++) {
-                *col += *(*(p[0] + i) + k) * *(*(p[1] + k) + j);
+            int *a = *(p[0] + i); 
+            int *b = *(*(p[1]) + j);
+
+            for (int *pa = a, *pb = b; pa < (i == 2 ? a + 3 : *(p[0] + i + 1)); pa++, pb += 3) { 
+                *col += (*pa) * (*pb); 
             }
         }
     }
