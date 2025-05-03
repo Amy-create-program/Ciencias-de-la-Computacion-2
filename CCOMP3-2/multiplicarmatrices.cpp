@@ -22,7 +22,7 @@ void multi(int (*p)[3][3]) {
             *col = 0; 
 
             int *a = *(p[0] + i); 
-            int *b = *(*(p[1]) + j);
+            int *b = &p[1][0][j];
 
             for (int *pa = a, *pb = b; pa < (i == 2 ? a + 3 : *(p[0] + i + 1)); pa++, pb += 3) { 
                 *col += (*pa) * (*pb); 
