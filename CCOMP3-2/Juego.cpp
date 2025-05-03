@@ -6,8 +6,8 @@ using namespace std;
 
 bool puzzleResuelto(int (*matriz)[3]) {
     int contador = 1;
-    for (int (*p)[3] = matriz; p < matriz + 3; p++) {
-        for (int *q = *p; q < (p == matriz + 2 ? *p + 3 : *(p + 1)); q++) {
+    for (int (*p)[3] = matriz; p < matriz + 3; ++p) {
+        for (int *q = *p; q < *p + 3; ++q) {
             if (q == *(matriz + 2) + 2) return (*q == 0);
             if (*q != contador++) return false;
         }
@@ -15,13 +15,11 @@ bool puzzleResuelto(int (*matriz)[3]) {
     return true;
 }
 
-void imprimirMatriz(int (*matriz)[3], int vacioY, int vacioX) {
+void imprimirMatriz(int (*matriz)[3], int *vacio) {
     cout << "\n";
-    int y = 0;
-    for (int (*p)[3] = matriz; p < matriz + 3; p++, y++) {
-        int x = 0;
-        for (int *q = *p; q < (p == matriz + 2 ? *p + 3 : *(p + 1)); q++, x++) {
-            if (*q == 0) {
+    for (int (*p)[3] = matriz; p < matriz + 3; ++p) {
+        for (int *q = *p; q < *p + 3; ++q) {
+            if (q == vacio) {
                 cout << "    ";
             } else {
                 cout << " " << setw(2) << *q << " ";
@@ -35,10 +33,10 @@ void imprimirMatriz(int (*matriz)[3], int vacioY, int vacioX) {
 
 int main() {
     int matriz[3][3] = {{4, 2, 6}, {1, 3, 7}, {8, 5, 0}};
-    int vacioY = 2, vacioX = 2;
+    int *vacio = *(matriz + 2) + 2;
 
     while (true) {
-        imprimirMatriz(matriz, vacioY, vacioX);
+        imprimirMatriz(matriz, vacio);
 
         if (puzzleResuelto(matriz)) {
             cout << "\n¡Felicidades! Resolviste el puzzle.\n";
@@ -48,25 +46,28 @@ int main() {
         int tecla = _getch();
         if (tecla == 224) tecla = _getch();
 
-        int nuevaY = vacioY, nuevaX = vacioX;
-
+        int dy = 0, dx = 0;
         switch (tecla) {
-            case 72: nuevaY++; break; // Flecha arriba
-            case 80: nuevaY--; break; // Flecha abajo
-            case 75: nuevaX++; break; // Flecha izquierda
-            case 77: nuevaX--; break; // Flecha derecha
+            case 72: dy = 1; break;  // Flecha arriba
+            case 80: dy = -1; break; // Flecha abajo
+            case 75: dx = 1; break;  // Flecha izquierda
+            case 77: dx = -1; break; // Flecha derecha
         }
 
-        if (nuevaY >= 0 && nuevaY < 3 && nuevaX >= 0 && nuevaX < 3) {
-            int *actual = *(matriz + vacioY) + vacioX;
-            int *objetivo = *(matriz + nuevaY) + nuevaX;
+        // Calcula la posición actual del puntero vacío
+        int y = (vacio - **matriz) / 3;
+        int x = (vacio - **matriz) % 3;
 
-            *actual = *objetivo;
+        int nuevaY = y + dy;
+        int nuevaX = x + dx;
+
+        if (nuevaY >= 0 && nuevaY < 3 && nuevaX >= 0 && nuevaX < 3) {
+            int *objetivo = *(matriz + nuevaY) + nuevaX;
+            *vacio = *objetivo;
             *objetivo = 0;
-            vacioY = nuevaY;
-            vacioX = nuevaX;
+            vacio = objetivo;
         }
     }
 
     return 0;
-} 
+}
