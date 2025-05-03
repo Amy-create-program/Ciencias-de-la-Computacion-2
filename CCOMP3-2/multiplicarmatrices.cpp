@@ -4,8 +4,8 @@
 using namespace std;
 
 void imprimirMatriz(int (*m)[3]) {
-    for (int (*p)[3] = m; p < m + 3; p++) {
-        for (int *q = *p; q < (p == m + 2 ? *p + 3 : *(p + 1)); q++) {
+    for (int (*p)[3] = m; p < m + 3; ++p) {
+        for (int *q = *p; q < *p + 3; ++q) {
             cout << setw(4) << *q;
         }
         cout << "\n";
@@ -14,18 +14,15 @@ void imprimirMatriz(int (*m)[3]) {
 }
 
 void multi(int (*p)[3][3]) {
+    int *resultado = &p[2][0][0]; // Resultado comienza en matriz[2][0][0]
 
-    for (int (*fila)[3] = p[2]; fila < p[2] + 3; fila++) { 
-        for (int *col = *fila; col < (fila == p[2] + 2 ? *fila + 3 : *(fila + 1)); col++) { 
-            int i = fila - p[2];
-            int j = col - *fila; 
-            *col = 0; 
-
-            int *a = *(p[0] + i); 
-            int *b = &p[1][0][j];
-
-            for (int *pa = a, *pb = b; pa < (i == 2 ? a + 3 : *(p[0] + i + 1)); pa++, pb += 3) { 
-                *col += (*pa) * (*pb); 
+    for (int i = 0; i < 3; ++i) {
+        for (int j = 0; j < 3; ++j, ++resultado) {
+            *resultado = 0;
+            for (int k = 0; k < 3; ++k) {
+                int *a = *(*(p + 0) + i) + k;      // A[i][k]
+                int *b = *(*(p + 1) + k) + j;      // B[k][j]
+                *resultado += (*a) * (*b);
             }
         }
     }
