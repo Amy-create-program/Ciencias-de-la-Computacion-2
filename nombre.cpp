@@ -23,7 +23,7 @@ int main() {
 		cout << *p << endl;
 	}
 	for(char *p = (char*)d; p < *d+15; p++){
-		cout << *p << endl;
+		cout << p << endl;
 	}
 	
 }
