@@ -1,8 +1,5 @@
 #include <iostream>
 
-// ----------------------------
-// Functor ASCENDENTE
-// ----------------------------
 template <class T>
 struct Ascendente {
     bool operator()(T a, T b) {
@@ -10,9 +7,6 @@ struct Ascendente {
     }
 };
 
-// ----------------------------
-// Functor DESCENDENTE
-// ----------------------------
 template <class T>
 struct Descendente {
     bool operator()(T a, T b) {
@@ -20,14 +14,10 @@ struct Descendente {
     }
 };
 
-// ----------------------------
-// Clase que ORDENA (con punteros y typename it itord;)
-// ----------------------------
 template <class T, class O>
 class ordena {
-    using it = T*;          // typename it
-    it itord;               // typename it itord;
-
+    using it = T*;          
+    it itord;               
 public:
     void ordenar(it ini, it fin) {   // it ord**
         itord = ini;  // Guardamos el inicio (opcional, solo para cumplir el apunte)
@@ -49,11 +39,11 @@ int main() {
     int arreglo[] = {5, 2, 9, 1, 7};
     using it = int*;
 
-    it ini = arreglo;       // 1* ini
-    it fin = arreglo + 5;   // 2* fin
+    it ini = arreglo;       
+    it fin = arreglo + 5;   
 
-    ordena<int, Ascendente<int>> ordenasc;   // orden<int, ascendente>
-    ordenasc.ordenar(ini, fin);              // ordenasc.ordenar(ini, fin)
+    ordena<int, Ascendente<int>> ordenasc;   
+    ordenasc.ordenar(ini, fin);               fin)
 
     std::cout << "Ascendente: ";
     for (it p = ini; p < fin; ++p) std::cout << *p << " ";
