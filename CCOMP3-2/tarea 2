@@ -1,0 +1,70 @@
+#include <iostream>
+
+// ----------------------------
+// Functor ASCENDENTE
+// ----------------------------
+template <class T>
+struct Ascendente {
+    bool operator()(T a, T b) {
+        return a > b;
+    }
+};
+
+// ----------------------------
+// Functor DESCENDENTE
+// ----------------------------
+template <class T>
+struct Descendente {
+    bool operator()(T a, T b) {
+        return a < b;
+    }
+};
+
+// ----------------------------
+// Clase que ORDENA (con punteros y typename it itord;)
+// ----------------------------
+template <class T, class O>
+class ordena {
+    using it = T*;          // typename it
+    it itord;               // typename it itord;
+
+public:
+    void ordenar(it ini, it fin) {   // it ord**
+        itord = ini;  // Guardamos el inicio (opcional, solo para cumplir el apunte)
+        O criterio;
+
+        for (it i = ini; i < fin - 1; ++i) {
+            for (it j = i + 1; j < fin; ++j) {
+                if (criterio(*i, *j)) {
+                    T temp = *i;
+                    *i = *j;
+                    *j = temp;
+                }
+            }
+        }
+    }
+};
+
+int main() {
+    int arreglo[] = {5, 2, 9, 1, 7};
+    using it = int*;
+
+    it ini = arreglo;       // 1* ini
+    it fin = arreglo + 5;   // 2* fin
+
+    ordena<int, Ascendente<int>> ordenasc;   // orden<int, ascendente>
+    ordenasc.ordenar(ini, fin);              // ordenasc.ordenar(ini, fin)
+
+    std::cout << "Ascendente: ";
+    for (it p = ini; p < fin; ++p) std::cout << *p << " ";
+    std::cout << std::endl;
+
+    ordena<int, Descendente<int>> ordendesc;
+    ordendesc.ordenar(ini, fin);
+
+    std::cout << "Descendente: ";
+    for (it p = ini; p < fin; ++p) std::cout << *p << " ";
+    std::cout << std::endl;
+
+    return 0;
+}
