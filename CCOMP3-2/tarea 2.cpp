@@ -19,8 +19,8 @@ class ordena {
     using it = T*;          
     it itord;               
 public:
-    void ordenar(it ini, it fin) {   // it ord**
-        itord = ini;  // Guardamos el inicio (opcional, solo para cumplir el apunte)
+    void ordenar(it ini, it fin) {   
+        itord = ini;  
         O criterio;
 
         for (it i = ini; i < fin - 1; ++i) {
@@ -43,7 +43,7 @@ int main() {
     it fin = arreglo + 5;   
 
     ordena<int, Ascendente<int>> ordenasc;   
-    ordenasc.ordenar(ini, fin);               fin)
+    ordenasc.ordenar(ini, fin);               
 
     std::cout << "Ascendente: ";
     for (it p = ini; p < fin; ++p) std::cout << *p << " ";
